@@ -9,6 +9,7 @@ package it.polito.tdp.alien;
 import java.net.URL;
 import java.util.ResourceBundle;
 
+import it.polito.tdp.alien.model.AlienModel;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
@@ -30,6 +31,8 @@ public class AlienController {
     @FXML
     private Button btnReset;
         
+    //
+	private AlienModel model;
     
     @FXML // This method is called by the FXMLLoader when initialization is complete
     void initialize() {
@@ -39,17 +42,31 @@ public class AlienController {
     	assert btnReset != null : "fx:id=\"btnReset\" was not injected: check your FXML file 'Alien.fxml'.";
     	
     }
-  
+    
+    public void setModel(AlienModel model) 
+	{
+		this.model = model;
+	}
     
     @FXML
-    void doTranslate(ActionEvent event) {
+    void doTranslate(ActionEvent event) 
+    {
+    	String stringaInserita = txtWord.getText();
+    	String result = model.doTranslate(stringaInserita);
+    	
+    	//inserimento nuova parola
+    	//traduzione
+    	txtResult.appendText(result);
+    	
+    	//op. comuni
+    	txtWord.clear();
     	    	
     }
     
-    
     @FXML
-    void doReset(ActionEvent event) {
-
+    void doReset(ActionEvent event) 
+    {
+    	txtResult.clear();
     }
     
 }
