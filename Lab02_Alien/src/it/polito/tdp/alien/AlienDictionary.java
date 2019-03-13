@@ -5,30 +5,39 @@ import java.util.List;
 
 public class AlienDictionary 
 {
-	private List<Word>dizionario; 
+	private List<WordEnhanced>dizionario; 
 	
 	public AlienDictionary()
 	{
-		dizionario = new LinkedList<Word>();
+		dizionario = new LinkedList<WordEnhanced>();
 	}
 	
 	public void addWord(String alienWord, String translation)
 	{
-		Word w = new Word(alienWord, translation);
+		WordEnhanced w = new WordEnhanced(alienWord, translation);
+		
 		//aggiunta
-		if (!dizionario.contains(w))
-			dizionario.add(w);
-		//aggiornamento
-		else
-			dizionario.get(dizionario.indexOf(w)).setTraslation(translation);
+		for (WordEnhanced we : dizionario)
+		{
+			if (we.getAlienWord().compareTo(alienWord) == 0)
+			{
+				dizionario.get(dizionario.indexOf(we)).setTraslation(translation);
+				return;
+			}
+		}
+		dizionario.add(w);
+		
+		//ipotizzo che si inseriscano traduzioni multiple con aggiunte successive e non tutte in un colpo solo
+		//aggiunta seconda traduzione
+			
 	}
 	
-	public String translateWord(String alienWord)
+	public List<String> translateWord(String alienWord)
 	{
-		for (Word w : dizionario)
+		for (WordEnhanced w : dizionario)
 		{
 			if (w.getAlienWord().compareTo(alienWord) == 0)
-				return w.getTraslation();
+				return w.getTraslations();
 		}
 		return null;
 	}

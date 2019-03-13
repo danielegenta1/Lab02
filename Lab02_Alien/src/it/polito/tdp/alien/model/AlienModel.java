@@ -4,7 +4,7 @@ import java.util.LinkedList;
 import java.util.List;
 
 import it.polito.tdp.alien.AlienDictionary;
-import it.polito.tdp.alien.Word;
+import it.polito.tdp.alien.WordEnhanced;
 
 public class AlienModel 
 {
@@ -21,16 +21,27 @@ public class AlienModel
 
 		if (buffer.length == 1)
 		{
+			//controllo se parola è corretta
 			//TODO generare eccezione
 			if (!buffer[0].matches("[a-zA-z]+"))
 				return "ERRORE: La stringa può contenere solo caratteri alfabetici\n";
 				
-			//controllo se parola è corretta
-			String res = dizionario.translateWord(buffer[0].toLowerCase());
-			if (res == null)
-				result = "AlienWord non trovata nel dizionario.\n";
-			else
-				result = "La traduzione di: " + input + " è " + res+"\n";
+			
+			List<String>aus = dizionario.translateWord(buffer[0].toLowerCase());
+			if (aus.size() == 0)
+				return "AlienWord non trovata nel dizionario.\n";
+			
+			//formattazione output
+			String res = "";
+			for (int i = 1; i <= aus.size(); i++)
+			{
+				String s = aus.get(i-1);
+				if (i <= aus.size()-1)
+					res += s + ", ";
+				else
+					res += s;
+			}
+			result = "La traduzione di: " + input + " è: " + res+"\n";
 		}
 		else if (buffer.length == 2)
 		{
