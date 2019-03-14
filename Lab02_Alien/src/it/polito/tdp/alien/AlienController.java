@@ -52,6 +52,7 @@ public class AlienController {
     void doTranslate(ActionEvent event) 
     {
     	String stringaInserita = txtWord.getText();
+    	
     	String result = model.doTranslate(stringaInserita);
     	
     	//inserimento nuova parola
@@ -66,6 +67,7 @@ public class AlienController {
     @FXML
     void doReset(ActionEvent event) 
     {
+    	model.doClear();
     	txtResult.clear();
     }
     

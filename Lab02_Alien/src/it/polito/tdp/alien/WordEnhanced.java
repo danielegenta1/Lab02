@@ -21,8 +21,6 @@ public class WordEnhanced {
 
 	public List<String> getTraslations() 
 	{
-		for (String s : traslations)
-			System.out.println(traslations);
 		return traslations;
 	}
 	

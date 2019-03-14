@@ -1,5 +1,6 @@
 package it.polito.tdp.alien.model;
 
+import java.security.InvalidParameterException;
 import java.util.LinkedList;
 import java.util.List;
 
@@ -22,13 +23,12 @@ public class AlienModel
 		if (buffer.length == 1)
 		{
 			//controllo se parola è corretta
-			//TODO generare eccezione
-			if (!buffer[0].matches("[a-zA-z]+"))
-				return "ERRORE: La stringa può contenere solo caratteri alfabetici\n";
+			if (!buffer[0].matches("[a-zA-z?]+"))
+				throw new InvalidParameterException(String.format("ERRORE: La stringa può contenere solo caratteri alfabetici\n"));
 				
 			
 			List<String>aus = dizionario.translateWord(buffer[0].toLowerCase());
-			if (aus.size() == 0)
+			if (aus == null)
 				return "AlienWord non trovata nel dizionario.\n";
 			
 			//formattazione output
@@ -45,20 +45,24 @@ public class AlienModel
 		}
 		else if (buffer.length == 2)
 		{
-			//TODO generare eccezione
-			if (!buffer[0].matches("[a-zA-z]+") || !buffer[1].matches("[a-zA-z]+"))
-				return "ERRORE: La stringa può contenere solo caratteri alfabetici\n";
+			if (!buffer[0].matches("[a-zA-z]+") || !buffer[1].matches("[a-zA-z?]+"))
+				throw new InvalidParameterException(String.format("ERRORE: La stringa può contenere solo caratteri alfabetici\n"));
 			
 			//controllo se parola non esiste in dizionario
 			//controllo se parola è corretta
 			dizionario.addWord(buffer[0].toLowerCase(), buffer[1].toLowerCase());
-			result = "Parola: " + buffer[0] + " aggiunta a dizionario\n";
+			result = "Combinazione: " + buffer[0] + " - " + buffer[1] + " aggiunta a dizionario\n";
 		}
 		//TODO generare eccezione?
 		else
 			result = "ERRORE: Formato stringa inserita non corretto\n";
 		
 		return result;
+	}
+	
+	public void doClear()
+	{
+		dizionario.clear();
 	}
 
 }

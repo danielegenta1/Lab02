@@ -34,11 +34,42 @@ public class AlienDictionary
 	
 	public List<String> translateWord(String alienWord)
 	{
-		for (WordEnhanced w : dizionario)
+		boolean matching = true;
+		if (dizionario.size() > 0)
 		{
-			if (w.getAlienWord().compareTo(alienWord) == 0)
-				return w.getTraslations();
+			for (WordEnhanced w : dizionario)
+			{
+				if (alienWord.contains("?"))
+				{
+					if (alienWord.length() != w.getAlienWord().length())
+					{
+						matching = false;
+						continue;
+					}
+					for (int i = 0; i < alienWord.length(); i++)
+					{
+						if (alienWord.substring(i, i+1).compareTo("?") == 0 
+								|| alienWord.substring(i, i+1).compareTo(w.getAlienWord().substring(i, i+1)) != 0)
+						{
+							if (alienWord.substring(i, i+1).compareTo("?") != 0 )
+								matching = false;
+							break;
+						}
+					}
+					if (matching)
+						return w.getTraslations();
+					else
+						return null;
+				}
+				if (w.getAlienWord().compareTo(alienWord) == 0)
+					return w.getTraslations();
+			}
 		}
 		return null;
+	}
+	
+	public void clear()
+	{
+		dizionario.clear();
 	}
 }
